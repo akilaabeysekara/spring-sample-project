@@ -6,7 +6,6 @@ import lombok.*;
 import java.util.List;
 
 @Entity
-@Table(name = "customer")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,15 +13,7 @@ import java.util.List;
 public class Customer {
 
     @Id
-    @Column(name = "cId")
-    private String cId;
-
-    @Column(name = "cName", nullable = false)
-    private String cName;
-
-    @Column(name = "cAddress")
-    private String cAddress;
-
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> orders;
+    private String id;
+    private String name;
+    private String address;
 }

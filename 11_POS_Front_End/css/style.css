@@ -71,6 +71,11 @@ input, select {
     cursor: pointer;
     font-weight: bold;
 }
+/* Move Place Order button to right */
+#place-order-container {
+    text-align: right;
+}
+
 
 /* Save */
 button:nth-child(5) {

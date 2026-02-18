@@ -1,17 +1,16 @@
 package lk.ijse.posebackend.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-public class OrderDetailDto {
+public class OrderDetailDTO {
+    private String id;
     private String itemId;
-    private double unitPrice;
+    private double price;
     private int qty;
-    private double subTotal;
+    private double total;
 }

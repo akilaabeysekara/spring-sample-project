@@ -1,17 +1,15 @@
 package lk.ijse.posebackend.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-public class OrderDto {
+public class OrderDTO {
     private String orderId;
     private String customerId;
     private List<OrderDetailDTO> orderDetails;

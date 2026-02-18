@@ -18,30 +18,9 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<Void> saveOrder(@RequestBody OrderDTO orderDTO) {
-        orderService.saveOrder(orderDTO);
+        // Changed method name to match the interface definition
+        orderService.PlaceOrder(orderDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @PutMapping
-    public ResponseEntity<Void> updateOrder(@RequestBody OrderDTO orderDTO) {
-        orderService.updateOrder(orderDTO);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @DeleteMapping
-    public ResponseEntity<Void> deleteOrder(@RequestParam String id) {
-        orderService.deleteOrder(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<OrderDTO>> getAllOrders() {
-        return new ResponseEntity<>(orderService.getAllOrders(), HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<OrderDTO> getOrderById(@PathVariable String id) {
-        return new ResponseEntity<>(orderService.getOrderById(id), HttpStatus.OK);
     }
 
 }
