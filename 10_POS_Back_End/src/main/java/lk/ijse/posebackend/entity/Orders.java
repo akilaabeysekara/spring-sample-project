@@ -10,6 +10,7 @@ import lombok.*;
 public class Orders {
 
     @Id
+    @Column(nullable = false, unique = true)
     private String orderId;
     private String customerId;
 }

@@ -27,27 +27,44 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void PlaceOrder(OrderDTO dto) {
-        // -------- VALIDATE CUSTOMER --------
-        Customer customer = customerRepository.findById(dto.getCustomerId())
-                .orElseThrow(() -> new RuntimeException("Customer not found with ID: " + dto.getCustomerId()));
 
-        // -------- SAVE ORDER --------
+        // CHECK ORDER ID DUPLICATE
+        if (orderRepository.existsById(dto.getOrderId())) {
+            throw new RuntimeException("Order ID already exists: " + dto.getOrderId());
+        }
+
+        //  VALIDATE CUSTOMER
+        Customer customer = customerRepository.findById(dto.getCustomerId())
+                .orElseThrow(() ->
+                        new RuntimeException("Customer not found with ID: " + dto.getCustomerId()));
+
+        // SAVE ORDER
         Orders order = new Orders();
         order.setOrderId(dto.getOrderId());
         order.setCustomerId(dto.getCustomerId());
 
         orderRepository.save(order);
 
-        // -------- SAVE ORDER DETAILS --------
+        // SAVE ORDER DETAILS
         for (OrderDetailDTO detailDTO : dto.getOrderDetails()) {
-            // -------- VALIDATE AND CHECK STOCK --------
-            Item item = itemRepository.findById(detailDTO.getItemId())
-                    .orElseThrow(() -> new RuntimeException("Item not found with ID: " + detailDTO.getItemId()));
 
-            // Check if sufficient stock is available
+            //  CHECK ORDER DETAIL DUPLICATE
+            if (orderDetailRepository.existsById(detailDTO.getId())) {
+                throw new RuntimeException("Order Detail ID already exists: " + detailDTO.getId());
+            }
+
+            //  VALIDATE ITEM
+            Item item = itemRepository.findById(detailDTO.getItemId())
+                    .orElseThrow(() ->
+                            new RuntimeException("Item not found with ID: " + detailDTO.getItemId()));
+
+            //  CHECK STOCK
             if (item.getQty() < detailDTO.getQty()) {
-                throw new RuntimeException("Insufficient stock for item: " + detailDTO.getItemId()
-                        + ". Available: " + item.getQty() + ", Required: " + detailDTO.getQty());
+                throw new RuntimeException(
+                        "Insufficient stock for item: " + detailDTO.getItemId() +
+                                ". Available: " + item.getQty() +
+                                ", Required: " + detailDTO.getQty()
+                );
             }
 
             OrderDetail orderDetail = new OrderDetail();
@@ -60,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
 
             orderDetailRepository.save(orderDetail);
 
-            // -------- UPDATE STOCK --------
+            //  UPDATE STOCK
             item.setQty(item.getQty() - detailDTO.getQty());
             itemRepository.save(item);
         }

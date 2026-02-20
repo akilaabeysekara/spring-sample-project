@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class OrderDetail {
 
     @Id
+    @Column(nullable = false, unique = true)
     private String id;
 
     @ManyToOne

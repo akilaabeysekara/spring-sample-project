@@ -1,6 +1,7 @@
 // Store cart items
 let cartItems = [];
 let itemsData = {}; // Store item details for quick lookup
+let existingOrderIds = new Set(); // Store existing order IDs
 
 function loadCustomers() {
     $.ajax({
@@ -42,6 +43,28 @@ function loadItems() {
             console.log(error);
         }
     });
+}
+
+// Load existing orders to track used order IDs
+function loadExistingOrders() {
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/api/v1/order",
+        success: function (response) {
+            existingOrderIds.clear();
+            $.each(response, function (index, order) {
+                existingOrderIds.add(order.orderId);
+            });
+        },
+        error: function (error) {
+            console.log("Could not load existing orders:", error);
+        }
+    });
+}
+
+// Check if order ID already exists
+function isOrderIdDuplicate(orderId) {
+    return existingOrderIds.has(orderId);
 }
 
 // Generate unique ID for order details
@@ -162,6 +185,13 @@ function placeOrder() {
         alert("Please enter Order ID");
         return;
     }
+
+    // Check for duplicate order ID
+    if (isOrderIdDuplicate(orderId)) {
+        alert("Order ID '" + orderId + "' already exists. Please use a different Order ID.");
+        return;
+    }
+
     if (!customerId) {
         alert("Please select a customer");
         return;
@@ -194,6 +224,8 @@ function placeOrder() {
         }),
         success: function (response) {
             alert("Order Placed Successfully");
+            // Add the new order ID to the set
+            existingOrderIds.add(orderId);
             // Clear form and cart
             clearOrderForm();
             loadItems(); // Reload items to update quantities
@@ -218,6 +250,7 @@ function clearOrderForm() {
 $(document).ready(function () {
     loadCustomers();
     loadItems();
+    loadExistingOrders(); // Load existing orders on page load
 
     // Event handlers
     $("#btn-add-to-cart").click(addToCart);

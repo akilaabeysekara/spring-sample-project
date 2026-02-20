@@ -1,115 +1,157 @@
+// GLOBAL DATA
+let customersData = [];
+
+// SAVE CUSTOMER
 function saveCustomer() {
-    let id = $('#customer_id').val()
-    let name = $('#customer_name').val()
-    let address = $('#customer_address').val()
+    let id = $('#customer_id').val().trim();
+    let name = $('#customer_name').val().trim();
+    let address = $('#customer_address').val().trim();
+    let phone = $('#customer_phone').val().trim();
+
+
+    if (id === "" || name === "" || address === "" || phone === "") {
+        alert("Please fill all fields");
+        return;
+    }
+
+    // Frontend duplicate check
+    let isDuplicate = customersData.some(customer => customer.id === id);
+    if (isDuplicate) {
+        alert("Customer ID already exists!");
+        return;
+    }
 
     $.ajax({
         url: 'http://localhost:8080/api/v1/customer',
         method: 'POST',
         contentType: 'application/json',
-
-        data: JSON.stringify({
-            id: id,
-            name: name,
-            address: address
-        }),
-        success: function (response) {
+        data: JSON.stringify({ id, name, address ,phone}),
+        success: function () {
             alert("Customer Saved Successfully");
             getALLCustomers();
             clearCustomerForm();
-        }, error: function (error) {
+        },
+        error: function (error) {
             alert("Error saving customer");
             console.log(error);
         }
-    })
+    });
 }
 
+// UPDATE CUSTOMER
 function updateCustomer() {
-    let id = $('#customerId').val()
-    let name = $('#customerName').val()
-    let address = $('#customerAddress').val()
+    let id = $('#customer_id').val().trim();
+    let name = $('#customer_name').val().trim();
+    let address = $('#customer_address').val().trim();
+    let phone = $('#customer_phone').val().trim();
+
+    if (id === "" || name === "" || address === "" || phone === "") {
+        alert("Please select a customer first");
+        return;
+    }
 
     $.ajax({
         url: 'http://localhost:8080/api/v1/customer',
         method: 'PUT',
         contentType: 'application/json',
-
-        data: JSON.stringify({
-            id: id,
-            name: name,
-            address: address
-        }),
-        success: function (response) {
+        data: JSON.stringify({ id, name, address, phone }),
+        success: function () {
             alert("Customer Updated Successfully");
             getALLCustomers();
             clearCustomerForm();
-        }, error: function (error) {
-            alert("Error Updating customer");
+        },
+        error: function (error) {
+            alert("Error updating customer");
             console.log(error);
         }
-    })
+    });
 }
 
+// DELETE CUSTOMER
 function deleteCustomer() {
-    let id = $('#customerId').val()
+    let id = $('#customer_id').val().trim();
+
+    if (id === "") {
+        alert("Please select a customer to delete");
+        return;
+    }
+
+    if (!confirm("Are you sure you want to delete this customer?")) {
+        return;
+    }
+
     $.ajax({
         url: 'http://localhost:8080/api/v1/customer/' + id,
         method: 'DELETE',
-        success: function (response) {
+        success: function () {
             alert("Customer Deleted Successfully");
             getALLCustomers();
             clearCustomerForm();
-        }, error: function (error) {
-            alert("Error Deleting customer");
+        },
+        error: function (error) {
+            alert("Error deleting customer");
             console.log(error);
         }
-    })
+    });
 }
 
+// GET ALL CUSTOMERS
 function getALLCustomers() {
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/api/v1/customer",
         success: function (response) {
-            $("#customer-table tbody").html("");
+
+            customersData = response; // store globally
+            $("#customer-table tbody").empty();
+
             $.each(response, function (index, customer) {
-                let row = "<tr style='cursor: pointer;'><td>" + customer.id + "</td><td>" + customer.name + "</td><td>" + customer.address + "</td></tr>";
+                let row = `
+                    <tr style="cursor:pointer;">
+                        <td>${customer.id}</td>
+                        <td>${customer.name}</td>
+                        <td>${customer.address}</td>
+                        <td>${customer.phone}</td>
+                    </tr>
+                `;
                 $("#customer-table tbody").append(row);
-            })
-
-            // Add click event handler to table rows
-            $("#customer-table tbody tr").on('click', function () {
-                let id = $(this).find('td:eq(0)').text();
-                let name = $(this).find('td:eq(1)').text();
-                let address = $(this).find('td:eq(2)').text();
-
-                fillCustomerForm(id, name, address);
             });
-        }, error: function (error) {
+        },
+        error: function (error) {
             alert("Error loading customers");
             console.log(error);
         }
-    })
+    });
 }
 
-function fillCustomerForm(id, name, address) {
+// TABLE CLICK EVENT
+$(document).on("click", "#customer-table tbody tr", function () {
+    let id = $(this).find("td:eq(0)").text();
+    let name = $(this).find("td:eq(1)").text();
+    let address = $(this).find("td:eq(2)").text();
+    let phone = $(this).find("td:eq(3)").text();
+
+    fillCustomerForm(id, name, address, phone);
+});
+
+// FILL FORM
+function fillCustomerForm(id, name, address, phone) {
     $('#customer_id').val(id);
     $('#customer_name').val(name);
     $('#customer_address').val(address);
-    $('#customerId').val(id);
-    $('#customerName').val(name);
-    $('#customerAddress').val(address);
+    $('#customer_phone').val(phone);
+
 }
 
+// CLEAR FORM
 function clearCustomerForm() {
     $('#customer_id').val('');
     $('#customer_name').val('');
     $('#customer_address').val('');
-    $('#customerId').val('');
-    $('#customerName').val('');
-    $('#customerAddress').val('');
+    $('#customer_phone').val('');
 }
 
+// LOAD ON START
 $(document).ready(function () {
     getALLCustomers();
 });

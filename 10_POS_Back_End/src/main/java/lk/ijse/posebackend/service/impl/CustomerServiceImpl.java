@@ -8,40 +8,56 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
     @Autowired
     private ModelMapper modelMapper;
 
     @Override
     public void saveCustomer(CustomerDTO customerDTO) {
-        customerRepository.save(modelMapper.map(customerDTO, Customer.class));
+        // Prevent duplicate customer IDs
+        if (customerRepository.existsById(customerDTO.getId())) {
+            throw new RuntimeException("Customer ID already exists");
+        }
+
+        Customer customer = modelMapper.map(customerDTO, Customer.class);
+        customerRepository.save(customer);
     }
+
     @Override
     public void updateCustomer(CustomerDTO customerDTO) {
-        customerRepository.save(modelMapper.map(customerDTO, Customer.class));
+        // Ensure customer exists before updating
+        if (!customerRepository.existsById(customerDTO.getId())) {
+            throw new RuntimeException("Customer not found");
+        }
+
+        Customer customer = modelMapper.map(customerDTO, Customer.class);
+        customerRepository.save(customer);
     }
+
     @Override
     public void deleteCustomer(String id) {
+        // Ensure customer exists before deleting
+        if (!customerRepository.existsById(id)) {
+            throw new RuntimeException("Customer not found");
+        }
+
         customerRepository.deleteById(id);
     }
 
     @Override
     public List<CustomerDTO> getAllCustomers() {
-        List<Customer> customers = customerRepository.findAll();
-        List<CustomerDTO> customerDTOS = new ArrayList<>();
-        for (Customer customer : customers) {
-            customerDTOS.add(modelMapper.map(customer, CustomerDTO.class));
-        }
-        return customerDTOS;
+        // Convert entity list to DTO list
+        return customerRepository.findAll()
+                .stream()
+                .map(customer -> modelMapper.map(customer, CustomerDTO.class))
+                .collect(Collectors.toList());
     }
-
-
 }
