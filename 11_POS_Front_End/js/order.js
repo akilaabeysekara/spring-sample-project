@@ -110,7 +110,7 @@ function updateCartTable() {
 
     $.each(cartItems, function (index, item) {
         $("#cart-table tbody").append(
-            "<tr>" +
+            "<tr style='cursor: pointer;'>" +
             "<td>" + orderId + "</td>" +
             "<td>" + item.itemName + "</td>" +
             "<td>" + item.qty + "</td>" +
@@ -119,6 +119,30 @@ function updateCartTable() {
             "</tr>"
         );
     });
+
+    // Add click event handler to cart table rows
+    $("#cart-table tbody tr").on('click', function () {
+        let itemName = $(this).find('td:eq(1)').text();
+        let qty = $(this).find('td:eq(2)').text();
+
+        fillCartForm(itemName, qty);
+    });
+}
+
+function fillCartForm(itemName, qty) {
+    // Find the item code by name
+    let itemCode = null;
+    for (let code in itemsData) {
+        if (itemsData[code].name === itemName) {
+            itemCode = code;
+            break;
+        }
+    }
+
+    if (itemCode) {
+        $("#item-select").val(itemCode);
+        $("#order-qty").val(qty);
+    }
 }
 
 function updateTotalAmount() {

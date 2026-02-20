@@ -36,7 +36,7 @@ function updateItem() {
         url: "http://localhost:8080/api/v1/item",
         contentType: "application/json",
         data: JSON.stringify({
-            id: id,
+            id: code,
             name: name,
             price: price,
             qty: qty
@@ -57,7 +57,7 @@ function deleteItem() {
     let code = $("#item-code").val();
     $.ajax({
         type: "DELETE",
-        url: 'http://localhost:8080/api/v1/item/' + id,
+        url: 'http://localhost:8080/api/v1/item/' + code,
         success: function (response) {
             alert("Item Deleted Successfully");
             getAllItems();
@@ -77,13 +77,31 @@ function getAllItems() {
         success: function (response) {
             $("#item-table tbody").html("");
             $.each(response, function (index, item) {
-                $("#item-table tbody").append("<tr><td>" + item.id + "</td><td>" + item.name + "</td><td>" + item.price + "</td><td>" + item.qty + "</td></tr>");
+                let row = "<tr style='cursor: pointer;'><td>" + item.id + "</td><td>" + item.name + "</td><td>" + item.price + "</td><td>" + item.qty + "</td></tr>";
+                $("#item-table tbody").append(row);
             })
+
+            // Add click event handler to table rows
+            $("#item-table tbody tr").on('click', function () {
+                let id = $(this).find('td:eq(0)').text();
+                let name = $(this).find('td:eq(1)').text();
+                let price = $(this).find('td:eq(2)').text();
+                let qty = $(this).find('td:eq(3)').text();
+
+                fillItemForm(id, name, price, qty);
+            });
         }, error: function (error) {
             alert("Error loading items");
             console.log(error);
         }
     })
+}
+
+function fillItemForm(id, name, price, qty) {
+    $("#item-code").val(id);
+    $("#item-name").val(name);
+    $("#item-price").val(price);
+    $("#item-qty").val(qty);
 }
 
 function clearItemForm() {

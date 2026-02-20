@@ -73,13 +73,32 @@ function getALLCustomers() {
         success: function (response) {
             $("#customer-table tbody").html("");
             $.each(response, function (index, customer) {
-                $("#customer-table tbody").append("<tr><td>" + customer.id + "</td><td>" + customer.name + "</td><td>" + customer.address + "</td></tr>");
+                let row = "<tr style='cursor: pointer;'><td>" + customer.id + "</td><td>" + customer.name + "</td><td>" + customer.address + "</td></tr>";
+                $("#customer-table tbody").append(row);
             })
+
+            // Add click event handler to table rows
+            $("#customer-table tbody tr").on('click', function () {
+                let id = $(this).find('td:eq(0)').text();
+                let name = $(this).find('td:eq(1)').text();
+                let address = $(this).find('td:eq(2)').text();
+
+                fillCustomerForm(id, name, address);
+            });
         }, error: function (error) {
             alert("Error loading customers");
             console.log(error);
         }
     })
+}
+
+function fillCustomerForm(id, name, address) {
+    $('#customer_id').val(id);
+    $('#customer_name').val(name);
+    $('#customer_address').val(address);
+    $('#customerId').val(id);
+    $('#customerName').val(name);
+    $('#customerAddress').val(address);
 }
 
 function clearCustomerForm() {

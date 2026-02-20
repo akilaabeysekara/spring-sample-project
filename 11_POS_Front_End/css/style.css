@@ -42,6 +42,7 @@ h1 {
 }
 
 /* Form Sections */
+#customer-data,
 #item-data,
 #order-data {
     background: white;
@@ -62,6 +63,7 @@ input, select {
 }
 
 /* Buttons */
+#customer-data button,
 #item-data button,
 #order-data button {
     padding: 8px 15px;
@@ -79,27 +81,62 @@ input, select {
 
 /* Save */
 button:nth-child(5) {
-    background-color: #27ae60;
+    background-color: #153695;
     color: white;
 }
 
 /* Update */
 button:nth-child(6) {
-    background-color: #f39c12;
+    background-color: #153695;
     color: white;
 }
 
 /* Delete */
 button:nth-child(7) {
-    background-color: #e74c3c;
+    background-color: #153695;
     color: white;
 }
 
 /* Search */
 button:nth-child(8) {
-    background-color: #8e44ad;
+    background-color: #153695;
     color: white;
 }
+
+button:nth-child(9) {
+    background-color: #153695;
+    color: white;
+}
+button:nth-child(10) {
+    background-color: #153695;
+    color: white;
+}
+button:nth-child(11) {
+    background-color: #153695;
+    color: white;
+}
+button:nth-child(12) {
+    background-color: #153695;
+    color: white;
+}
+button:nth-child(13) {
+    background-color: #153695;
+    color: white;
+}
+button:nth-child(14) {
+    background-color: #153695;
+    color: white;
+}
+button:nth-child(15) {
+    background-color: #153695;
+    color: white;
+}
+
+#btn-place-order {
+    background-color: #153695;
+    color: white;
+}
+
 
 /* Tables */
 table {
