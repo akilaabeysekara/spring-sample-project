@@ -23,7 +23,7 @@ public class AuthController {
     @PostMapping("signin")
     public ResponseEntity<APIResponse>loginUser(@RequestBody AuthDTO authDTO){
         return ResponseEntity.ok(new APIResponse(
-                200,"User registered successfully",userService.authenticate(authDTO)));
+                200,"User authenticated successfully",userService.authenticate(authDTO)));
 
     }
 }

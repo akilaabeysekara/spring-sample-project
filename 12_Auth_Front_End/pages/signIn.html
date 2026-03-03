@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Sign In</title>
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+<div class="container">
+    <h2>Sign In</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
 
+    <button onclick="login()">Login</button>
+
+    <div class="link">
+        <a href="signUp.html">Create account</a>
+    </div>
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/signin.js"></script>
 </body>
 </html>

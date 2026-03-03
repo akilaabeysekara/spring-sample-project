@@ -32,13 +32,21 @@ public class UserService {
         userRepository.save(user);
         return "User registered successfully";
     }
+
     public AuthResponseDTO authenticate(AuthDTO authDTO){
-        User user=userRepository.findByUsername(authDTO.getUsername()).orElseThrow(
-                () -> new UsernameNotFoundException("Username not found"));
-        if (!passwordEncoder.matches(authDTO.getPassword(),user.getPassword())){
+
+        User user = userRepository.findByUsername(authDTO.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+
+        if (!passwordEncoder.matches(authDTO.getPassword(), user.getPassword())){
             throw new BadCredentialsException("Wrong password");
         }
-        String token=jwtUtil.generateToken(authDTO.getUsername());
+
+        String token = jwtUtil.generateToken(
+                user.getUsername(),
+                user.getRole().name()
+        );
+
         return new AuthResponseDTO(token);
     }
 }
