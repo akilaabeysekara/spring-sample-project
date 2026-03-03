@@ -11,11 +11,17 @@ async function apiRequest(endpoint, method, body = null, auth = false) {
         headers["Authorization"] = "Bearer " + token;
     }
 
-    const response = await fetch(BASE_URL + endpoint, {
-        method: method,
-        headers: headers,
-        body: body ? JSON.stringify(body) : null
-    });
+    try {
+        const response = await fetch(BASE_URL + endpoint, {
+            method: method,
+            headers: headers,
+            body: body ? JSON.stringify(body) : null
+        });
 
-    return response.json();
+        return response.json();
+    } catch (error) {
+        alert("Server error occurred");
+        console.error("API Request failed:", error);
+        throw error;
+    }
 }
