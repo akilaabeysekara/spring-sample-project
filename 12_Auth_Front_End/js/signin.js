@@ -13,6 +13,9 @@ async function login() {
         const token = response.data.access_token;
         const payload = JSON.parse(atob(token.split('.')[1]));
 
+        // Print the success message
+        alert(response.message);
+
         if (payload.role === "ADMIN") {
             window.location.href = "adminPage.html";
         } else {
@@ -20,6 +23,7 @@ async function login() {
         }
 
     } else {
+        // Print the error message
         alert(response.message);
     }
 }

@@ -21,6 +21,7 @@ async function register() {
         role
     });
 
+    // Print the success message
     alert(response.message);
     window.location.href = "signIn.html";
 }
