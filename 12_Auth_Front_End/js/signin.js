@@ -2,7 +2,7 @@ async function login() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    const response = await apiRequest("/auth/signin", "POST", {
+    const response = await apiRequest("/auth/signIn", "POST", {
         username,
         password
     });

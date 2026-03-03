@@ -15,7 +15,7 @@ async function register() {
         return;
     }
 
-    const response = await apiRequest("/auth/signup", "POST", {
+    const response = await apiRequest("/auth/signUp", "POST", {
         username,
         password,
         role
