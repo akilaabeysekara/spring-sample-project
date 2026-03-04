@@ -6,7 +6,7 @@ let existingOrderIds = new Set(); // Store existing order IDs
 function loadCustomers() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/api/v1/customer",
+        url: "http://localhost:8081/api/v1/customer",
         success: function (response) {
             let options = "<option value=''>Select Customer</option>";
             $.each(response, function (index, customer) {
@@ -24,7 +24,7 @@ function loadCustomers() {
 function loadItems() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/api/v1/item",
+        url: "http://localhost:8081/api/v1/item",
         success: function (response) {
             let options = "<option value=''>Select Item</option>";
             $.each(response, function (index, item) {
@@ -49,7 +49,7 @@ function loadItems() {
 function loadExistingOrders() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/api/v1/order",
+        url: "http://localhost:8081/api/v1/order",
         success: function (response) {
             existingOrderIds.clear();
             $.each(response, function (index, order) {
@@ -215,7 +215,7 @@ function placeOrder() {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/api/v1/order",
+        url: "http://localhost:8081/api/v1/order",
         contentType: "application/json",
         data: JSON.stringify({
             orderId: orderId,

@@ -17,15 +17,6 @@
         <module name="02_Spring_Bean_Life_Cycle" />
         <module name="06_Runtime_Value_Injection" />
       </profile>
-      <profile name="Annotation profile for 13_Auth_BackEnd" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-        </processorPath>
-        <module name="posebackend" />
-      </profile>
       <profile name="Annotation profile for Auth_BackEnd" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -36,6 +27,16 @@
         </processorPath>
         <module name="Auth_BackEnd" />
       </profile>
+      <profile name="Annotation profile for 14_Spring_Test_Logs_and_API_docs" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+        </processorPath>
+        <module name="Spring_Test_Logs_and_API_docs" />
+        <module name="posebackend" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="demo" target="25" />
@@ -44,6 +45,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Auth_BackEnd" options="-parameters" />
+      <module name="Spring_Test_Logs_and_API_docs" options="-parameters" />
       <module name="demo" options="-parameters" />
       <module name="posebackend" options="-parameters" />
     </option>

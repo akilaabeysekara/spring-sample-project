@@ -23,7 +23,7 @@ function saveItem() {
 
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/api/v1/item",
+        url: "http://localhost:8081/api/v1/item",
         contentType: "application/json",
         data: JSON.stringify({
             id: id,
@@ -57,7 +57,7 @@ function updateItem() {
 
     $.ajax({
         type: "PUT",
-        url: "http://localhost:8080/api/v1/item",
+        url: "http://localhost:8081/api/v1/item",
         contentType: "application/json",
         data: JSON.stringify({
             id: id,
@@ -91,7 +91,7 @@ function deleteItem() {
 
     $.ajax({
         type: "DELETE",
-        url: "http://localhost:8080/api/v1/item/" + id,
+        url: "http://localhost:8081/api/v1/item/" + id,
         success: function () {
             alert("Item Deleted Successfully");
             getAllItems();
@@ -108,7 +108,7 @@ function deleteItem() {
 function getAllItems() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/api/v1/item",
+        url: "http://localhost:8081/api/v1/item",
         success: function (response) {
             itemsData = response; // Store globally
 

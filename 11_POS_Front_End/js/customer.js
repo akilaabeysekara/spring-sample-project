@@ -22,7 +22,7 @@ function saveCustomer() {
     }
 
     $.ajax({
-        url: 'http://localhost:8080/api/v1/customer',
+        url: 'http://localhost:8081/api/v1/customer',
         method: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({ id, name, address ,phone}),
@@ -51,7 +51,7 @@ function updateCustomer() {
     }
 
     $.ajax({
-        url: 'http://localhost:8080/api/v1/customer',
+        url: 'http://localhost:8081/api/v1/customer',
         method: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify({ id, name, address, phone }),
@@ -81,7 +81,7 @@ function deleteCustomer() {
     }
 
     $.ajax({
-        url: 'http://localhost:8080/api/v1/customer/' + id,
+        url: 'http://localhost:8081/api/v1/customer/' + id,
         method: 'DELETE',
         success: function () {
             alert("Customer Deleted Successfully");
@@ -99,7 +99,7 @@ function deleteCustomer() {
 function getALLCustomers() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/api/v1/customer",
+        url: "http://localhost:8081/api/v1/customer",
         success: function (response) {
 
             customersData = response; // store globally
