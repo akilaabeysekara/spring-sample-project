@@ -31,7 +31,19 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Jackson Core: JSON serialization/deserialization library for converting Java objects to/from JSON in REST APIs -->
+        <!-- Jackson JSON library: JSON serialization/deserialization for converting Java objects to/from JSON in REST APIs -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.17.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.17.1</version>
+        </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
