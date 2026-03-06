@@ -9,5 +9,4 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @ComponentScan(basePackages = "lk.ijse.controller")
 @EnableWebMvc
 public class WebAppConfig implements WebMvcConfigurer{
-
 }
