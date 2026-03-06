@@ -94,6 +94,60 @@ public class CustomerController {
     //------------------------------------------------------------------------------------------------
 
     /*
+     * POST mapping - Save customer using JSON
+     *
+     * Postman → Body → raw → JSON
+     *
+     * Request body format:
+     * {
+     *   "id": "C001",
+     *   "name": "Akila",
+     *   "address": "Galle"
+     * }
+     *
+     * @RequestBody annotation converts JSON to Java object automatically
+     * This is the most common approach in modern REST APIs
+     */
+
+    @PostMapping("/save4")
+    public String saveCustomerBodyJson(@RequestBody CustomerDTO dto) {
+
+        return "saved-4 using JSON : "
+                + dto.getId() + " "
+                + dto.getName() + " "
+                + dto.getAddress();
+    }
+
+    //------------------------------------------------------------------------------------------------
+
+    /*
+     * POST mapping - Save customer using JSON without DTO
+     *
+     * Postman → Body → raw → JSON
+     *
+     * Request body format:
+     * {
+     *   "id": "C001",
+     *   "name": "Akila",
+     *   "address": "Galle"
+     * }
+     *
+     * @RequestBody with Map<String, String> accepts JSON and converts it to a Map
+     * This approach doesn't use DTO but is less type-safe
+     */
+
+    @PostMapping("/save5")
+    public String saveCustomerBodyJsonWithoutDto(@RequestBody java.util.Map<String, String> customerData) {
+
+        return "saved-5 using JSON without DTO : "
+                + customerData.get("id") + " "
+                + customerData.get("name") + " "
+                + customerData.get("address");
+    }
+
+    //------------------------------------------------------------------------------------------------
+
+    /*
      * PUT mapping - Update entire customer resource
      */
 
