@@ -36,7 +36,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
                         null,        // upload directory
                         5242880,     // max file size (5MB)
                         10485760,    // max request size (10MB)
-                        0
+                        0 // file size threshold in bytes - 0 means all files are written directly to disk
                 );
 
         registration.setMultipartConfig(multipartConfigElement);
