@@ -10,7 +10,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @ComponentScan(basePackages = "lk.ijse")
 @EnableWebMvc
-public class WebAppConfig implements WebMvcConfigurer{
+public class WebAppConfig implements WebMvcConfigurer {
+
     /*
      * This bean enables multipart/form-data support.
      * Without this, Spring MVC cannot read form-data requests.
